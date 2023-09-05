@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "320168482868",
+    "project_id": "myai-2aa34",
+    "storage_bucket": "myai-2aa34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320168482868:android:98cb4fe8f5789a18a39261",
+        "android_client_info": {
+          "package_name": "com.example.imagetoai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320168482868-de8j9r0qsc4g9ieomoa3ho0ietgbu76j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM9Or5OkVLOdil91riz6riSgzeDloEchE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320168482868-de8j9r0qsc4g9ieomoa3ho0ietgbu76j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
