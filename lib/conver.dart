@@ -13,26 +13,50 @@ class ConverPage extends StatefulWidget {
 
 class _ConverPageState extends State<ConverPage> {
   String id = "";
+  String k = "";
+  bool r = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: InkWell(
+            onTap: () {
+              id = "";
+              k = "";
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back)),
+      ),
       body: (url != null)
           ? Column(
               children: [
-                Image.network(url!),
+                Container(height: 200, child: Image.network(url!)),
                 SizedBox(
                   height: 10,
                 ),
                 Text("new Image"),
+                SizedBox(
+                  height: 10,
+                ),
+                (k != "")
+                    ? Expanded(
+                        child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Image.network(k)))
+                    : (r)
+                        ? Expanded(child: Container(width: MediaQuery.of(context).size.width,child: Center(child: CircularProgressIndicator())))
+                        : Container(),
               ],
             )
           : Container(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+          
           await getApi();
-          String? k = await getimage();
-          print(k);
+
+          await getimage();
+          print("$k my");
+          setState(() {});
         },
         child: Center(
           child: Icon(Icons.conveyor_belt),
@@ -42,6 +66,10 @@ class _ConverPageState extends State<ConverPage> {
   }
 
   getApi() async {
+    r = true;
+          setState(() {
+            
+          });
     Map<String, String>? heder = {
       "Authorization": "Token r8_C7RkOmDU2O4DeYNnlMIYb12boFNI7R33T1S5i"
     };
@@ -60,24 +88,35 @@ class _ConverPageState extends State<ConverPage> {
       var data = jsonDecode(response.body);
       print(data['id']);
       id = data['id'];
+      setState(() {});
     }
-    
   }
 
   getimage() async {
+    await Future.delayed(
+      Duration(seconds: 10),
+      () {},
+    );
     Map<String, String>? heder = {
       "Authorization": "Token r8_C7RkOmDU2O4DeYNnlMIYb12boFNI7R33T1S5i"
     };
-    http.Response response = await http.post(
-        Uri.parse("https://api.replicate.com/v1/predictions/$id"),
+    print(id);
+    http.Response response = await http.get(
+        Uri.parse("https://api.replicate.com/v1/predictions/${id}"),
         headers: heder);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       // String? imagurl = data['output'];
       print(data);
-      print(data['output']);
-      // return "";
+      if (data['output'] == null) {
+        getimage();
+      } else {
+        k = data['output'];
+        setState(() {});
+        return;
+      }
+      // print(data['output']);
     }
   }
 }

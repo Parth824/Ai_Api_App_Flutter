@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
   File? imageFile;
   String? imagename;
   UploadTask? uploadTask;
+  bool isTreu = false;
 
   Future uploadFile() async {
     final path = 'image/$imagename';
@@ -48,6 +49,8 @@ class _HomePageState extends State<HomePage> {
     final snapshot = await uploadTask!.whenComplete(() => null);
     url = await snapshot.ref.getDownloadURL();
     print('Download Link $url');
+    isTreu = true;
+    setState(() {});
   }
 
   @override
@@ -72,7 +75,10 @@ class _HomePageState extends State<HomePage> {
                       ));
                 }
               },
-              child: Icon(Icons.arrow_circle_right))
+              child: (isTreu)
+                  ? Icon(Icons.arrow_circle_right)
+                  : CircularProgressIndicator(color: Colors.white,)),
+                  SizedBox(width: 10,),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -162,6 +168,7 @@ class _HomePageState extends State<HomePage> {
     imagename = null;
     imageFile = null;
     url = null;
+    isTreu = false;
     setState(() {
       state = AppState.free;
     });
